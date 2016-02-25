@@ -48,15 +48,56 @@ int getOption (){
 void handleOption (){
   switch (getOption ()){
     case -1: break;
-    case 1:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);  Serial.println("AccelRange setted to 2G");  equivAccel = MPU6050_ACCEL_FS_2_EQUIV; 	           	break;}
-    case 2:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);  Serial.println("AccelRange setted to 4G");  equivAccel = MPU6050_ACCEL_FS_4_EQUIV; 	           	break;}
-    case 3:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_8);  Serial.println("AccelRange setted to 8G");  equivAccel = MPU6050_ACCEL_FS_8_EQUIV; 		          break;}
-    case 4:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16); Serial.println("AccelRange setted to 16G"); equivAccel = MPU6050_ACCEL_FS_16_EQUIV;		          break;}
-    case 5:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_250);  Serial.println("GyroRange setted to 250 degrees/sec");	equivGyro = MPU6050_GYRO_FS_250_EQUIV;  break;}
-    case 6:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_500);  Serial.println("GyroRange setted to 500 degrees/sec");	equivGyro = MPU6050_GYRO_FS_500_EQUIV;  break;}
-    case 7:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_1000); Serial.println("GyroRange setted to 1000 degrees/sec");	equivGyro = MPU6050_GYRO_FS_1000_EQUIV; break;}
-    case 8:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000); Serial.println("GyroRange setted to 2000 degrees/sec");	equivGyro = MPU6050_GYRO_FS_2000_EQUIV; break;}
-    default:{ Serial.println ("Option not implemented");            break;}
+    case 1:{ 
+      accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);
+      Serial.println("AccelRange setted to 2G");  
+      equivAccel = MPU6050_ACCEL_FS_2_EQUIV; 	           	
+      break;
+     }
+    case 2:{ 
+      accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);
+      Serial.println("AccelRange setted to 4G");  
+      equivAccel = MPU6050_ACCEL_FS_4_EQUIV; 	           	
+      break; 
+    }
+    case 3:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_8);
+      Serial.println("AccelRange setted to 8G");  
+      equivAccel = MPU6050_ACCEL_FS_8_EQUIV; 		          
+      break;
+    }
+    case 4:{ 
+      accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16);
+      Serial.println("AccelRange setted to 16G"); 
+      equivAccel = MPU6050_ACCEL_FS_16_EQUIV;		          
+      break;
+    }
+    case 5:{ 
+      accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_250);
+      Serial.println("GyroRange setted to 250 degrees/sec");	
+      equivGyro = MPU6050_GYRO_FS_250_EQUIV;  
+      break;
+    }
+    case 6:{ 
+      accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_500);
+      Serial.println("GyroRange setted to 500 degrees/sec");	
+      equivGyro = MPU6050_GYRO_FS_500_EQUIV;
+      break;
+    }
+    case 7:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_1000); 
+      Serial.println("GyroRange setted to 1000 degrees/sec");	
+      equivGyro = MPU6050_GYRO_FS_1000_EQUIV;
+      break;
+    }
+    case 8:{ 
+      accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000); 
+      Serial.println("GyroRange setted to 2000 degrees/sec");	
+      equivGyro = MPU6050_GYRO_FS_2000_EQUIV; 
+      break;
+    }
+    default:{ 
+      Serial.println ("Option not implemented");
+      break;
+    }
   }
 }
 void setup(){
@@ -91,9 +132,8 @@ void loop(){
   Serial.print(float (accelgyro.getRotationY()) / equivGyro);   Serial.print (",");
   Serial.print(float (accelgyro.getRotationZ()) / equivGyro);   Serial.print (",");
   
-  Serial.println(accelgyro.getTemperature()/340.00+36.53);
+  Serial.println(accelgyro.getTemperature() / 340.00 + 36.53);
 
   handleOption ();
   delay(100);
 }
-
