@@ -4,10 +4,10 @@ import numpy as np
 from sys import stdin
 from matplotlib import pyplot as plt
 
-#serialPort = '/dev/ttyACM0'
+serialPort = '/dev/ttyACM0'
 baudRate = 9600
 
-#ser = serial.Serial(serialPort, baudRate)
+ser = serial.Serial(serialPort, baudRate)
 
 plt.ion() # set plot to animated
 
@@ -21,9 +21,9 @@ zAnVelData = [0] * 50
 
 tempData = [0] * 50
 
-ax1=plt.axes()
+ax1 = plt.axes()
 
-plt.figure(1).subplots_adjust(hspace=.5)
+plt.figure(1).subplots_adjust(hspace = .5)
 
 plt.subplot(311).set_title("Acceleration")
 xAccel, = plt.plot(xAccelData)
@@ -42,7 +42,6 @@ plt.ylim([0,0])
 
 while True:
 
-    input_var = stdin.readline().split("\n")[0]
     rawData = ""
     rawDataSplitted = []
     while len (rawDataSplitted) != 7 or not 'AccelRange' in rawData or not 'GyroRange' in rawData:
