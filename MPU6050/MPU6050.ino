@@ -28,6 +28,8 @@ MPU6050 accelgyro;
 
 String inString = "";
 
+int acquisitionTime = 1000;
+
 int equivAccel = MPU6050_ACCEL_FS_2_EQUIV;
 int equivGyro = MPU6050_GYRO_FS_250_EQUIV;
 
@@ -94,6 +96,30 @@ void handleOption (){
       equivGyro = MPU6050_GYRO_FS_2000_EQUIV; 
       break;
     }
+    case 9:{ 
+      Serial.println ("Incrementing acquisition time in 5 ms");
+      acquisitionTime = min (acquisitionTime + 5, 1000);
+      Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
+      break;
+    }
+    case 10:{ 
+      Serial.println ("Incrementing acquisition time in 50 ms"); 
+      acquisitionTime = min (acquisitionTime + 50, 1000);
+      Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
+      break;
+    }
+    case 11:{ 
+      Serial.println("Decrementing acquisition time in 5 ms");
+      acquisitionTime = max (acquisitionTime - 5, 5);
+      Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
+      break;
+    }
+    case 12:{ 
+      Serial.println("Decrementing acquisition time in 50 ms");  
+      acquisitionTime = max (acquisitionTime - 50, 5);
+      Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" mz");
+      break;
+    }
     default:{ 
       Serial.println ("Option not implemented");
       break;
@@ -108,18 +134,28 @@ void setup(){
     Fastwire::setup(400, true);
   #endif
 
-  accelgyro.initialize();
-  
   Serial.begin(9600);
+
+  accelgyro.initialize();
+  Serial.println ("Setted adquisition time to 1000 ms");
+  Serial.println ("Setted AccelRange to +- 2G");
+  Serial.println ("Setted GyroRange to +- 250 degrees/sec\n");
 
   Serial.println ("1 - Set AccelRange to +- 2G");
   Serial.println ("2 - Set AccelRange to +- 4G");
   Serial.println ("3 - Set AccelRange to +- 8G");
   Serial.println ("4 - Set AccelRange to +- 16G");
+  
   Serial.println ("5 - Set GyroRange to +- 250 degrees/sec");
   Serial.println ("6 - Set GyroRange to +- 500 degrees/sec");
   Serial.println ("7 - Set GyroRange to +- 1000 degrees/sec");
   Serial.println ("8 - Set GyroRange to +- 2000 degrees/sec");
+  Serial.println ("9 - Set GyroRange to +- 2000 degrees/sec");
+  
+  Serial.println ("10 - Increment acquisition time in 5 ms");
+  Serial.println ("11 - Increment acquisition time in 50 ms");
+  Serial.println ("12 - Decrement acquisition time in 5 ms");
+  Serial.println ("13 - Decrement acquisition time in 50 ms");
 }
 
 void loop(){
@@ -135,5 +171,5 @@ void loop(){
   Serial.println(accelgyro.getTemperature() / 340.00 + 36.53);
 
   handleOption ();
-  delay(100);
+  delay(acquisitionTime);
 }
