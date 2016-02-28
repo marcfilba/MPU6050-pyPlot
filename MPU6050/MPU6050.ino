@@ -33,6 +33,8 @@ int acquisitionTime = 1000;
 int equivAccel = MPU6050_ACCEL_FS_2_EQUIV;
 int equivGyro = MPU6050_GYRO_FS_250_EQUIV;
 
+bool acquisitionActivated = false;
+
 int getOption (){
   int option = -1;
   while (Serial.available() > 0){
@@ -51,71 +53,81 @@ void handleOption (){
   switch (getOption ()){
     case -1: break;
     case 1:{ 
+      acquisitionActivated = true;
+      Serial.println("Starting acquisition");  
+      break;
+     }
+     case 2:{ 
+      acquisitionActivated = false;
+      Serial.println("Stoping acquisition");  ;  
+      break;
+     }
+    case 3:{ 
       accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);
       Serial.println("AccelRange setted to 2G");  
       equivAccel = MPU6050_ACCEL_FS_2_EQUIV; 	           	
       break;
      }
-    case 2:{ 
+    case 4:{ 
       accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);
       Serial.println("AccelRange setted to 4G");  
       equivAccel = MPU6050_ACCEL_FS_4_EQUIV; 	           	
       break; 
     }
-    case 3:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_8);
+    case 5:{ accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_8);
       Serial.println("AccelRange setted to 8G");  
       equivAccel = MPU6050_ACCEL_FS_8_EQUIV; 		          
       break;
     }
-    case 4:{ 
+    case 6:{ 
       accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16);
       Serial.println("AccelRange setted to 16G"); 
       equivAccel = MPU6050_ACCEL_FS_16_EQUIV;		          
       break;
     }
-    case 5:{ 
+    case 7:{ 
       accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_250);
       Serial.println("GyroRange setted to 250 degrees/sec");	
       equivGyro = MPU6050_GYRO_FS_250_EQUIV;  
       break;
     }
-    case 6:{ 
+    case 8:{ 
       accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_500);
       Serial.println("GyroRange setted to 500 degrees/sec");	
       equivGyro = MPU6050_GYRO_FS_500_EQUIV;
       break;
     }
-    case 7:{ 
+    case 9:{ 
       accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_1000); 
       Serial.println("GyroRange setted to 1000 degrees/sec");	
       equivGyro = MPU6050_GYRO_FS_1000_EQUIV;
       break;
     }
-    case 8:{ 
+    case 10:{ 
       accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000); 
       Serial.println("GyroRange setted to 2000 degrees/sec");	
       equivGyro = MPU6050_GYRO_FS_2000_EQUIV; 
       break;
     }
-    case 9:{ 
+    case 11:{ 
       Serial.println ("Incrementing acquisition time in 5 ms");
       acquisitionTime = min (acquisitionTime + 5, 1000);
       Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
       break;
     }
-    case 10:{ 
+    case 12:{ 
       Serial.println ("Incrementing acquisition time in 50 ms"); 
       acquisitionTime = min (acquisitionTime + 50, 1000);
       Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
       break;
     }
-    case 11:{ 
+    case 13:{ 
       Serial.println("Decrementing acquisition time in 5 ms");
       acquisitionTime = max (acquisitionTime - 5, 5);
       Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" ms");
       break;
     }
-    case 12:{ 
+    case 14:{ 
       Serial.println("Decrementing acquisition time in 50 ms");  
       acquisitionTime = max (acquisitionTime - 50, 5);
       Serial.print ("Acquisition time setted to "); Serial.print (acquisitionTime); Serial.println (" mz");
@@ -142,34 +154,39 @@ void setup(){
   Serial.println ("Setted AccelRange to +- 2G");
   Serial.println ("Setted GyroRange to +- 250 degrees/sec\n");
 
-  Serial.println ("1 - Set AccelRange to +- 2G");
-  Serial.println ("2 - Set AccelRange to +- 4G");
-  Serial.println ("3 - Set AccelRange to +- 8G");
-  Serial.println ("4 - Set AccelRange to +- 16G");
+  Serial.println ("1 - Start acquisition");
+  Serial.println ("2 - Stop acquisition");
+
+  Serial.println ("3 - Set AccelRange to +- 2G");
+  Serial.println ("4 - Set AccelRange to +- 4G");
+  Serial.println ("5 - Set AccelRange to +- 8G");
+  Serial.println ("6 - Set AccelRange to +- 16G");
   
-  Serial.println ("5 - Set GyroRange to +- 250 degrees/sec");
-  Serial.println ("6 - Set GyroRange to +- 500 degrees/sec");
-  Serial.println ("7 - Set GyroRange to +- 1000 degrees/sec");
-  Serial.println ("8 - Set GyroRange to +- 2000 degrees/sec");
+  Serial.println ("7 - Set GyroRange to +- 250 degrees/sec");
+  Serial.println ("8 - Set GyroRange to +- 500 degrees/sec");
+  Serial.println ("9 - Set GyroRange to +- 1000 degrees/sec");
+  Serial.println ("10 - Set GyroRange to +- 2000 degrees/sec");
   
-  Serial.println ("9 - Increment acquisition time in 5 ms");
-  Serial.println ("10 - Increment acquisition time in 50 ms");
-  Serial.println ("11 - Decrement acquisition time in 5 ms");
-  Serial.println ("12 - Decrement acquisition time in 50 ms");
+  Serial.println ("11 - Increment acquisition time in 5 ms");
+  Serial.println ("12 - Increment acquisition time in 50 ms");
+  Serial.println ("13 - Decrement acquisition time in 5 ms");
+  Serial.println ("14 - Decrement acquisition time in 50 ms\n");
 }
 
 void loop(){
 
-  Serial.print(float (accelgyro.getAccelerationX()) / equivAccel) * 9,8;  Serial.print (",");
-  Serial.print(float (accelgyro.getAccelerationY()) / equivAccel) * 9,8;  Serial.print (",");
-  Serial.print(float (accelgyro.getAccelerationZ()) / equivAccel) * 9,8;  Serial.print (",");
-  
-  Serial.print(float (accelgyro.getRotationX()) / equivGyro);   Serial.print (",");
-  Serial.print(float (accelgyro.getRotationY()) / equivGyro);   Serial.print (",");
-  Serial.print(float (accelgyro.getRotationZ()) / equivGyro);   Serial.print (",");
-  
-  Serial.println(accelgyro.getTemperature() / 340.00 + 36.53);
+  if (acquisitionActivated){
+    Serial.print(float (accelgyro.getAccelerationX()) / equivAccel) * 9.8;  Serial.print (",");
+    Serial.print(float (accelgyro.getAccelerationY()) / equivAccel) * 9.8;  Serial.print (",");
+    Serial.print(float (accelgyro.getAccelerationZ()) / equivAccel) * 9.8;  Serial.print (",");
+    
+    Serial.print(float (accelgyro.getRotationX()) / equivGyro);   Serial.print (",");
+    Serial.print(float (accelgyro.getRotationY()) / equivGyro);   Serial.print (",");
+    Serial.print(float (accelgyro.getRotationZ()) / equivGyro);   Serial.print (",");
+    
+    Serial.println(accelgyro.getTemperature() / 340.00 + 36.53);
+    delay(acquisitionTime);
+  }
 
   handleOption ();
-  delay(acquisitionTime);
 }
