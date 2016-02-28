@@ -85,7 +85,8 @@ void handleOption (){
       equivGyro = MPU6050_GYRO_FS_500_EQUIV;
       break;
     }
-    case 7:{ accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_1000); 
+    case 7:{ 
+      accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_1000); 
       Serial.println("GyroRange setted to 1000 degrees/sec");	
       equivGyro = MPU6050_GYRO_FS_1000_EQUIV;
       break;
@@ -150,12 +151,11 @@ void setup(){
   Serial.println ("6 - Set GyroRange to +- 500 degrees/sec");
   Serial.println ("7 - Set GyroRange to +- 1000 degrees/sec");
   Serial.println ("8 - Set GyroRange to +- 2000 degrees/sec");
-  Serial.println ("9 - Set GyroRange to +- 2000 degrees/sec");
   
-  Serial.println ("10 - Increment acquisition time in 5 ms");
-  Serial.println ("11 - Increment acquisition time in 50 ms");
-  Serial.println ("12 - Decrement acquisition time in 5 ms");
-  Serial.println ("13 - Decrement acquisition time in 50 ms");
+  Serial.println ("9 - Increment acquisition time in 5 ms");
+  Serial.println ("10 - Increment acquisition time in 50 ms");
+  Serial.println ("11 - Decrement acquisition time in 5 ms");
+  Serial.println ("12 - Decrement acquisition time in 50 ms");
 }
 
 void loop(){
